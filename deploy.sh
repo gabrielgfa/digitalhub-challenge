@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-STACK_NAME="vehicle-demo-stack"
+STACK_NAME="vehicle-demo"
 REGION="eu-west-1"
 
 sam build
