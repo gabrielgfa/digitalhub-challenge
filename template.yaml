@@ -1,6 +1,11 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Vehicle Demo API with API Gateway + Lambda + DynamoDB
 
+Parameters:
+  LambdaS3Key:
+    Type: String
+    Description: "S3 key of the Lambda zip file"
+
 Resources:
   VehicleTable:
     Type: AWS::DynamoDB::Table
@@ -37,7 +42,7 @@ Resources:
       Role: !GetAtt VehicleLambdaRole.Arn
       Code:
         S3Bucket: vehicle-demo-lambda
-        S3Key: vehicle_handler.zip
+        S3Key: !Ref LambdaS3Key
       Environment:
         Variables:
           TABLE_NAME: !Ref VehicleTable

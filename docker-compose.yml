@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  aws-deployer:
+    build: .
+    container_name: vehicle-demo-deployer
+    environment:
+      - AWS_DEFAULT_REGION=eu-west-1
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - ~/.aws:/root/.aws:ro
+    command: ["bash", "deploy.sh"]
