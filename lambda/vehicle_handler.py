@@ -30,7 +30,14 @@ def lambda_handler(event, context):
     
     elif method == 'GET':
         response = table.scan()
-        return {"statusCode": 200, "body": json.dumps(response['Items'])}
+        items = []
+        for item in response['Items']:
+            items.append({
+                "vin": item["vin"],
+                "noOfAxles": int(item["noOfAxles"]),  # convert Decimal to int
+                "fuelType": item["fuelType"]
+            })
+        return {"statusCode": 200, "body": json.dumps(items)}
     
     elif method == 'DELETE':
         vin = event['queryStringParameters'].get('vin')
