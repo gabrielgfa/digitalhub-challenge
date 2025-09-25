@@ -1,12 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Vehicle Demo API with API Gateway + Lambda + DynamoDB
+Transform: AWS::Serverless-2016-10-31
+Description: Vehicle API Demo
 
-Parameters:
-  LambdaS3Key:
-    Type: String
-    Description: "S3 key of the Lambda zip file"
+Globals:
+  Function:
+    Timeout: 10
+    Runtime: python3.11
+    Handler: vehicle_handler.lambda_handler
+    Environment:
+      Variables:
+        TABLE_NAME: vehicle-demo
 
 Resources:
+
   VehicleTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -19,108 +25,26 @@ Resources:
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
 
-  VehicleLambdaRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action: sts:AssumeRole
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
-        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-
   VehicleLambda:
-    Type: AWS::Lambda::Function
+    Type: AWS::Serverless::Function
     Properties:
-      FunctionName: vehicleHandler
-      Handler: vehicle_handler.lambda_handler
-      Runtime: python3.11
-      Role: !GetAtt VehicleLambdaRole.Arn
-      Code:
-        S3Bucket: vehicle-demo-lambda
-        S3Key: !Ref LambdaS3Key
-      Environment:
-        Variables:
-          TABLE_NAME: !Ref VehicleTable
-
-  ApiGateway:
-    Type: AWS::ApiGateway::RestApi
-    Properties:
-      Name: VehicleApi
-
-  VehicleResource:
-    Type: AWS::ApiGateway::Resource
-    Properties:
-      ParentId: !GetAtt ApiGateway.RootResourceId
-      PathPart: vehicle
-      RestApiId: !Ref ApiGateway
-
-  VehiclesResource:
-    Type: AWS::ApiGateway::Resource
-    Properties:
-      ParentId: !GetAtt ApiGateway.RootResourceId
-      PathPart: vehicles
-      RestApiId: !Ref ApiGateway
-
-  PostVehicleMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      HttpMethod: POST
-      ResourceId: !Ref VehicleResource
-      RestApiId: !Ref ApiGateway
-      AuthorizationType: NONE
-      Integration:
-        Type: AWS_PROXY
-        IntegrationHttpMethod: POST
-        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${VehicleLambda.Arn}/invocations
-
-  GetVehiclesMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      HttpMethod: GET
-      ResourceId: !Ref VehiclesResource
-      RestApiId: !Ref ApiGateway
-      AuthorizationType: NONE
-      Integration:
-        Type: AWS_PROXY
-        IntegrationHttpMethod: POST
-        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${VehicleLambda.Arn}/invocations
-
-  DeleteVehicleMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      HttpMethod: DELETE
-      ResourceId: !Ref VehicleResource
-      RestApiId: !Ref ApiGateway
-      AuthorizationType: NONE
-      Integration:
-        Type: AWS_PROXY
-        IntegrationHttpMethod: POST
-        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${VehicleLambda.Arn}/invocations
-
-  LambdaInvokePermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      FunctionName: !Ref VehicleLambda
-      Action: lambda:InvokeFunction
-      Principal: apigateway.amazonaws.com
-      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGateway}/*/*/*
-
-  ApiDeployment:
-    Type: AWS::ApiGateway::Deployment
-    DependsOn:
-      - PostVehicleMethod
-      - GetVehiclesMethod
-      - DeleteVehicleMethod
-    Properties:
-      RestApiId: !Ref ApiGateway
-      StageName: prod
-
-Outputs:
-  ApiEndpoint:
-    Description: "API Gateway endpoint URL"
-    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod"
+      CodeUri: lambda/
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: vehicle-demo
+      Events:
+        GetVehicles:
+          Type: Api
+          Properties:
+            Path: /vehicles
+            Method: GET
+        CreateVehicle:
+          Type: Api
+          Properties:
+            Path: /vehicle
+            Method: POST
+        DeleteVehicle:
+          Type: Api
+          Properties:
+            Path: /vehicle
+            Method: DELETE

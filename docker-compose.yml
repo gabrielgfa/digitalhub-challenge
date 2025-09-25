@@ -1,13 +1,19 @@
 version: "3.9"
 
 services:
-  aws-deployer:
+  aws-sam-deployer:
     build: .
-    container_name: vehicle-demo-deployer
+    container_name: vehicle-demo-sam
     environment:
       - AWS_DEFAULT_REGION=eu-west-1
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - SAM_CLI_TELEMETRY=0
     volumes:
       - ~/.aws:/root/.aws:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./lambda:/app/lambda
+      - ./template.yaml:/app/template.yaml
+      - ./deploy.sh:/app/deploy.sh
+    working_dir: /app
     command: ["bash", "deploy.sh"]

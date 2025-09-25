@@ -34,7 +34,7 @@ def lambda_handler(event, context):
         for item in response['Items']:
             items.append({
                 "vin": item["vin"],
-                "noOfAxles": int(item["noOfAxles"]),  # convert Decimal to int
+                "noOfAxles": int(item["noOfAxles"]),
                 "fuelType": item["fuelType"]
             })
         return {"statusCode": 200, "body": json.dumps(items)}
