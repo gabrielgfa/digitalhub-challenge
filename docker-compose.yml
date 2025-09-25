@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  aws-sam-deployer:
+  aws-deployer:
     build: .
-    container_name: vehicle-demo-sam
+    container_name: vehicle-demo-deployer
     environment:
       - AWS_DEFAULT_REGION=eu-west-1
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
