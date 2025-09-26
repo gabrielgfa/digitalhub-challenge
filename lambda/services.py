@@ -40,3 +40,4 @@ class VehicleService:
             return respond(400, {"error": "Missing required field: vin"})
         table.delete_item(Key={"vin": vin})
         return respond(200, {"message": "Vehicle deleted"})
+    

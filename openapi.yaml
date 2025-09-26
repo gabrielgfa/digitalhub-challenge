@@ -1,0 +1,154 @@
+openapi: 3.0.3
+info:
+  title: Vehicle Demo API
+  description: API for creating, listing, and deleting vehicle records.
+  version: 1.0.0
+  contact:
+    name: Gabriel
+    email: gabriel@example.com
+
+servers:
+  - url: https://itn68281je.execute-api.eu-west-1.amazonaws.com/prod
+    description: Production server
+
+tags:
+  - name: Vehicles
+    description: Operations related to vehicles
+
+paths:
+  /vehicle:
+    post:
+      tags:
+        - Vehicles
+      summary: Create a new vehicle
+      description: Adds a new vehicle record. Fails if VIN already exists.
+      operationId: createVehicle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleInput'
+      responses:
+        '201':
+          description: Vehicle successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleCreatedResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Vehicle already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Vehicles
+      summary: Delete a vehicle
+      description: Deletes a vehicle record by VIN.
+      operationId: deleteVehicle
+      parameters:
+        - name: vin
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Vehicle Identification Number
+      responses:
+        '200':
+          description: Vehicle successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDeletedResponse'
+        '400':
+          description: Missing or invalid VIN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /vehicles:
+    get:
+      tags:
+        - Vehicles
+      summary: List all vehicles
+      description: Returns a list of all vehicle records.
+      operationId: listVehicles
+      responses:
+        '200':
+          description: List of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+
+components:
+  schemas:
+    VehicleInput:
+      type: object
+      required:
+        - vin
+        - noOfAxles
+        - fuelType
+      properties:
+        vin:
+          type: string
+          description: Vehicle Identification Number
+          example: "1HGCM82633A004352"
+        noOfAxles:
+          type: integer
+          description: Number of axles
+          example: 4
+        fuelType:
+          type: string
+          description: Type of fuel
+          enum: ["electric", "gaseous"]
+          example: "electric"
+
+    Vehicle:
+      type: object
+      properties:
+        vin:
+          type: string
+        noOfAxles:
+          type: integer
+        fuelType:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    VehicleCreatedResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Vehicle created
+        timestamp:
+          type: string
+          format: date-time
+
+    VehicleDeletedResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Vehicle deleted
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Validation error
