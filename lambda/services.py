@@ -9,10 +9,9 @@ table = dynamodb.Table('vehicle-demo')
 
 class VehicleService:
 
-
     def create_vehicle(self, data):
         vehicle = VehicleModel(data)
-        if not vehicle.is_valid():
+        if not vehicle.is_valid:
             return respond(400, {"error": vehicle.errors})
 
         try:
