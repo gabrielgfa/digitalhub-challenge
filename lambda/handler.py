@@ -15,8 +15,7 @@ def lambda_handler(event, context):
         return service.list_vehicles()
 
     elif method == 'DELETE':
-        data = parse_body(event)
-        return service.delete_vehicle(data)
+        return service.delete_vehicle(event)
 
     else:
         return respond(405, {"error": "Method not allowed"})

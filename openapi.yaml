@@ -4,12 +4,8 @@ info:
   description: API for creating, listing, and deleting vehicle records.
   version: 1.0.0
   contact:
-    name: Gabriel
-    email: gabriel@example.com
-
-servers:
-  - url: https://itn68281je.execute-api.eu-west-1.amazonaws.com/prod
-    description: Production server
+    name: Gabriel Garcia
+    email: hello@gabrielgfa.com
 
 tags:
   - name: Vehicles

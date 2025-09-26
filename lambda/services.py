@@ -34,10 +34,11 @@ class VehicleService:
         items = [VehicleModel(item).to_dict() for item in response.get('Items', [])]
         return respond(200, items)
 
-    def delete_vehicle(self, data):
-        vin = data.get('vin')
+    def delete_vehicle(self, event):
+        vin = event.get("queryStringParameters", {}).get("vin")
         if not vin:
             return respond(400, {"error": "Missing required field: vin"})
+        
         table.delete_item(Key={"vin": vin})
         return respond(200, {"message": "Vehicle deleted"})
     
