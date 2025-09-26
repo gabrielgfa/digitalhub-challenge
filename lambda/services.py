@@ -14,7 +14,7 @@ class VehicleService:
             return respond(400, {"error": vehicle.errors})
 
         table.put_item(Item=vehicle.to_dict())
-        return respond(201, {"message": "Vehicle created"})
+        return respond(201, {"message": "Vehicle created", "timestamp": vehicle.timestamp})
 
     def list_vehicles(self):
         response = table.scan()
