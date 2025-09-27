@@ -1,8 +1,7 @@
 # MAN DigitalHub Challenge
 
-Hello, CCE team! :)  
-This project implements a **serverless API on AWS** to handle vehicle data. The API accepts JSON payloads, stores them in DynamoDB, and provides endpoints to create, list, and delete vehicles.  
-To fulfill the optional requirement, it also creates weekly a summary file containing the total number of vehicles is generated and stored in an S3 bucket.
+Hello, CCE team!  
+This project implements a **serverless API on AWS** to handle vehicle data. The API accepts JSON payloads, stores them in DynamoDB, and provides endpoints to create, list, and delete vehicles. To fulfill the optional requirement, it also creates weekly a summary file containing the total number of vehicles is generated and stored in an S3 bucket.
 
 Each vehicle record includes:
 - `vin` (string) – unique vehicle identifier
