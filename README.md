@@ -66,12 +66,13 @@ I noticed in your interview guideline that GitLab is the platform you use, which
 
 1. **Source Control:** Developer pushes code → [GitLab CI](https://docs.gitlab.com/ci/) triggers pipeline  
 2. **Linting & Unit Tests:** Python tests + code quality checks  
-3. **Build & Package:** SAM build and package commands  
-4. **Approval Gate:** Manual approval before production deploy  
+3. **Approval Gate:** Manual approval before production deploy  
+4. **Build & Package:** SAM build and package commands  
 5. **Deployment:** Deploy to environment  
 6. **Monitoring:** CloudWatch logs and metrics (maybe with a Datadog integration for better monitoring)
 
 
 ## Wrap-up
 
-Thanks for the fun challenge! I really enjoyed putting this together. I’m looking forward to chatting with you in the interview and hearing your thoughts.
+Thanks for the fun challenge! I really enjoyed putting this together.  
+I’m looking forward to chatting with you in the interview and hearing your thoughts. 🙂
