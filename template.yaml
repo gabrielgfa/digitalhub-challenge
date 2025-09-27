@@ -49,3 +49,25 @@ Resources:
           Properties:
             Path: /vehicle
             Method: DELETE
+
+  SummaryLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda/
+      Handler: summary.lambda_handler
+      Runtime: python3.11
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: vehicle-demo
+        - S3WritePolicy:
+            BucketName: !Ref SummaryBucket
+      Events:
+        WeeklyTrigger:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+
+  SummaryBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "vehicle-summary"
