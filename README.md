@@ -1,7 +1,8 @@
 # MAN DigitalHub Challenge
 
-Hello, CCE team! :)
+Hello, CCE team! :)  
 This project implements a **serverless API on AWS** to handle vehicle data. The API accepts JSON payloads, stores them in DynamoDB, and provides endpoints to create, list, and delete vehicles.  
+To fulfill the optional requirement, it also creates weekly a summary file containing the total number of vehicles is generated and stored in an S3 bucket.
 
 Each vehicle record includes:
 - `vin` (string) – unique vehicle identifier
@@ -9,7 +10,7 @@ Each vehicle record includes:
 - `fuelType` (string) – allowed values: `"electric"` or `"gaseous"`
 - `timestamp` (string) – ISO timestamp when the record was created  
 
-And to fulfill the optional requirement, it also creates weekly a summary file containing the total number of vehicles could be generated and stored in an S3 bucket.
+And always following your advice in the interview guideline: when in doubt, simplify! :)  
 
 ## Deployment
 
@@ -28,4 +29,4 @@ Now, all we gotta do is run:
 docker compose up --build
 ```
 
-This Docker compose will be responsible to install all the dependencies, bundle the code, and run [AWS SAM](https://aws.amazon.com/serverless/sam/) to deploy the application to AWS.
+This Docker compose will be responsible to install all the dependencies, and run [AWS SAM](https://aws.amazon.com/serverless/sam/) to bundle the code and deploy the application to AWS.
