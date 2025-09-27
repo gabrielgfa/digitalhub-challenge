@@ -1,4 +1,4 @@
-# digitalhub-challenge
+# MAN DigitalHub Challenge
 
 Hello, CCE team! :)
 This project implements a **serverless API on AWS** to handle vehicle data. The API accepts JSON payloads, stores them in DynamoDB, and provides endpoints to create, list, and delete vehicles.  
@@ -19,4 +19,13 @@ And to fulfill the optional requirement, it also creates weekly a summary file c
 ```
     aws configure
 ```
-- [Docker](https://docs.docker.com/engine/install/) installed. 
+- [Docker](https://docs.docker.com/engine/install/) installed.
+
+### Deploying
+
+Now, all we gotta do is run:
+```
+docker compose up --build
+```
+
+This Docker compose will be responsible to install all the dependencies, bundle the code, and run [AWS SAM](https://aws.amazon.com/serverless/sam/) to deploy the application to AWS.
