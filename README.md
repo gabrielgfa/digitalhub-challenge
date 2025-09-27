@@ -24,7 +24,7 @@ For this challenge, I followed your advice: *"Have fun and when in doubt, simpli
 
 ## Architecture & Design  
 
-### Architecture Diagram (Conceptual):**  
+### Architecture Diagram:
 ```
 [API Gateway] --> [VehicleLambda] --> [DynamoDB]
 [SummaryLambda] (triggered by CloudWatch Event) --> [DynamoDB] --> [S3 Bucket]
@@ -57,3 +57,21 @@ All you need to do is run:
 docker compose up --build
 ```
 This Docker compose will be responsible to install all dependencies, and run AWS SAM to bundle the code and deploy the application to AWS.
+
+## High-level CI/CD Strategy
+
+I noticed in your interview guideline that GitLab is the platform you use, which I know well. For this project, I replicated the level of automation I aim for in any stack, using Docker to manage the build environment and create the application image through the [Gitlab Container Registry](https://docs.gitlab.com/user/packages/container_registry/), while leveraging [GitLab CI](https://docs.gitlab.com/ci/) to automate the build and deployment process from start to finish.  
+
+### Pipeline Flow:  
+
+1. **Source Control:** Developer pushes code → [GitLab CI](https://docs.gitlab.com/ci/) triggers pipeline  
+2. **Linting & Unit Tests:** Python tests + code quality checks  
+3. **Build & Package:** SAM build and package commands  
+4. **Approval Gate:** Manual approval before production deploy  
+5. **Deployment:** Deploy to environment  
+6. **Monitoring:** CloudWatch logs and metrics (maybe with a Datadog integration for better monitoring)
+
+
+## Wrap-up
+
+Thanks for the fun challenge! I really enjoyed putting this together. I’m looking forward to chatting with you in the interview and hearing your thoughts.
