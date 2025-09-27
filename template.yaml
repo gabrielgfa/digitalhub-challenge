@@ -5,7 +5,7 @@ Description: Vehicle API Demo
 Globals:
   Function:
     Timeout: 10
-    Runtime: python3.11
+    Runtime: python3.13
     Handler: handler.lambda_handler
     Environment:
       Variables:
@@ -55,7 +55,7 @@ Resources:
     Properties:
       CodeUri: lambda/
       Handler: summary.lambda_handler
-      Runtime: python3.11
+      Runtime: python3.13
       Policies:
         - DynamoDBReadPolicy:
             TableName: vehicle-demo

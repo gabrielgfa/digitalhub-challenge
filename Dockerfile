@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 RUN apt-get update && apt-get install -y unzip curl zip jq groff less git && \
     pip install awscli boto3 aws-sam-cli && \
