@@ -45,6 +45,7 @@ The system is fully serverless and event-driven. Client requests are sent throug
 ### Requirements
 - AWS account (also works on free tier version)
 - Docker  
+- Docker Compose  
 - [AWS CLI](https://aws.amazon.com/cli/)
 - AWS credentials configured (`~/.aws/credentials`)
 
