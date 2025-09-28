@@ -24,11 +24,8 @@ For this challenge, I followed your advice: *"Have fun and when in doubt, simpli
 
 ## Architecture & Design  
 
-### Architecture Diagram:
-```
-[API Gateway] --> [VehicleLambda] --> [DynamoDB]
-[SummaryLambda] (triggered by CloudWatch Event) --> [DynamoDB] --> [S3 Bucket]
-```
+### Architecture Explanation:
+The system is fully serverless and event-driven. Client requests are sent through API Gateway, which routes them to the Vehicle Lambda for CRUD operations on DynamoDB. Separately, a scheduled Summary Lambda runs via EventBridge, counts the items in DynamoDB, and stores a summary file in S3. This separation keeps the API lightweight while ensuring reporting runs independently.
 
 ### Design Decisions:
 - **Serverless:** Lambda functions for event-driven, scalable endpoints  
