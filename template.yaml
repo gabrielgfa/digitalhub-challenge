@@ -65,7 +65,7 @@ Resources:
         WeeklyTrigger:
           Type: Schedule
           Properties:
-            Schedule: rate(1 week)
+            Schedule: rate(7 days)
 
   SummaryBucket:
     Type: AWS::S3::Bucket

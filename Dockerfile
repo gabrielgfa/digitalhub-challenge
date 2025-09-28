@@ -9,4 +9,7 @@ WORKDIR /app
 COPY template.yaml .
 COPY deploy.sh .
 
+COPY deploy.sh .
+RUN sed -i 's/\r$//' deploy.sh
+
 CMD ["bash", "deploy.sh"]
