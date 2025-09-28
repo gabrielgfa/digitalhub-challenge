@@ -9,7 +9,8 @@ For this challenge, I followed your advice: *"Have fun and when in doubt, simpli
 ## Project overview  
 
 ### Key Features:
-- REST API for CRUD operations on vehicles (`POST /vehicle`, `GET /vehicles`, `DELETE /vehicle`)  
+- REST API for CRUD operations on vehicles (`POST /vehicle`, `GET /vehicles`, `DELETE /vehicle`). 
+  - You can check the openapi spec in the project for these calls.  
 - Persistence in DynamoDB (`vehicle-demo` table)  
 - Weekly summary of vehicle count generated and stored in S3 (`vehicle-summary` bucket)  
 - Fully automated deployment using AWS SAM  
