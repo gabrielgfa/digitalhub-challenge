@@ -10,7 +10,7 @@ For this challenge, I followed your advice: *"Have fun and when in doubt, simpli
 
 ### Key Features:
 - REST API for CRUD operations on vehicles (`POST /vehicle`, `GET /vehicles`, `DELETE /vehicle`). 
-  - You can check the openapi spec in the project for these calls.  
+  - You can check the openapi spec in the project for these requests.  
 - Persistence in DynamoDB (`vehicle-demo` table)  
 - Weekly summary of vehicle count generated and stored in S3 (`vehicle-summary` bucket)  
 - Fully automated deployment using AWS SAM  
@@ -45,9 +45,34 @@ The system is fully serverless and event-driven. Client requests are sent throug
 ### Requirements
 - AWS account (also works on free tier version)
 - Docker  
-- Docker Compose  
+- Docker Compose (optional)  
 - [AWS CLI](https://aws.amazon.com/cli/)
 - AWS credentials configured (`~/.aws/credentials`)
+
+###  Option 1: Using Docker Compose (optional)  
+> ⚠️ **Note:** For this lightweight, serverless solution, Docker Compose is a bit overkill, but I wanted to provide it as an option for convenience.  
+
+```
+docker compose up --build
+```
+
+Useful if you want a fully reproducible environment with minimal local setup, or if you plan to expand to multiple services in the future.
+
+###  Option 2: Using Docker only (simpler)  
+If you prefer to run with just Docker, these commands will work:  
+
+```
+docker build -t vehicle-demo-deployer .
+
+docker run --rm -it \
+  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+  -e AWS_DEFAULT_REGION=eu-west-1 \
+  -v ~/.aws:/root/.aws:ro \
+  vehicle-demo-deployer
+```
+
+Quick and sufficient for this serverless project since all you need is the AWS SAM CLI inside a single container.
 
 ### Deployment Steps
 
