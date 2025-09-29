@@ -74,14 +74,6 @@ docker run --rm -it \
 
 Quick and sufficient for this serverless project since all you need is the AWS SAM CLI inside a single container.
 
-### Deployment Steps
-
-All you need to do is run:
-```
-docker compose up --build
-```
-This Docker compose will be responsible to install all dependencies, and run AWS SAM to bundle the code and deploy the application to AWS.
-
 ## High-level CI/CD Strategy
 
 I noticed in your interview guideline that GitLab is the platform you use, which I know well. For this project, I replicated the level of automation I aim for in any stack, using Docker to manage the build environment and create the application image through the [Gitlab Container Registry](https://docs.gitlab.com/user/packages/container_registry/), while leveraging [GitLab CI](https://docs.gitlab.com/ci/) to automate the build and deployment process from start to finish.  
