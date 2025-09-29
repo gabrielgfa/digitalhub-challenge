@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y unzip curl zip jq groff less git && \
 WORKDIR /app
 
 COPY template.yaml .
-COPY deploy.sh .
 
 COPY deploy.sh .
 RUN sed -i 's/\r$//' deploy.sh
