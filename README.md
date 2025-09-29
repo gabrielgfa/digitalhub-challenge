@@ -37,7 +37,7 @@ The system is fully serverless and event-driven. Client requests are sent throug
 
 ### Considerations:  
 - Free Tier compatible  
-- Schedule for summary can be adjusted (currently daily)  
+- Schedule for summary can be adjusted (currently weekly)  
 - Error handling included for common DynamoDB conflicts (e.g., duplicate VIN)  
 
 ## Deployment  
