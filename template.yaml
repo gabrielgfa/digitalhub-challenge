@@ -2,17 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Vehicle API Demo
 
-Globals:
-  Function:
-    Timeout: 10
-    Runtime: python3.13
-    Handler: handler.lambda_handler
-    Environment:
-      Variables:
-        TABLE_NAME: vehicle-demo
-
 Resources:
-
   VehicleTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -29,6 +19,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: lambda/
+      Runtime: python3.13
+      Handler: handler.lambda_handler
       Policies:
         - DynamoDBCrudPolicy:
             TableName: vehicle-demo
